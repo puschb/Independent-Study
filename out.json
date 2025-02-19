@@ -1,0 +1,125 @@
+{
+  "total": 729,
+  "corrected_query": false,
+  "page_handle": "dHM9MTczOTYxNjkwMiZhbGc9amV0cGFjayUzQXNlYXJjaCUyRjEwJnNlc3Npb25faWQ9YktWdFZaJmJsb2dfaWQ9MjI0ODExNDIzJnBvc3RfaWQ9NTkwNTM=",
+  "results": [
+    {
+      "_score": null,
+      "fields": {
+        "date": "2025-02-17 14:25:36",
+        "has.image": 3,
+        "blog_id": 224811423,
+        "image.url.raw": [
+          "www.thecity.nyc\/wp-content\/uploads\/2024\/11\/110624_joshi_election_1-scaled.jpg",
+          "www.thecity.nyc\/wp-content\/uploads\/2024\/08\/082024_adams_off_topic_willimas_isom_1-1024x683.jpg",
+          "www.thecity.nyc\/wp-content\/uploads\/2024\/10\/101524_parker_1-1024x683.jpg"
+        ],
+        "image.alt_text": [
+          "Deputy Mayor of Operations Meera Joshi, with First Deputy Maria Torres-Springer, speaks at City Hall about the presidential election results.",
+          "Deputy Mayor Anne Williams-Isom answers questions from reporters doing the weekly off-topic presser at City Hall.",
+          "The new deputy mayor for public safety, Chauncey Parker, joins Mayor Eric Adams at City Hall during his weekly off-topic press conference."
+        ],
+        "@type": "post",
+        "permalink.url.raw": "www.thecity.nyc\/2025\/02\/17\/joshi-torres-springer-williams-isom-eric-adams-trump\/",
+        "title.default": "Four Adams Deputy Mayors Quit Following Trump Deal",
+        "post_id": 59057,
+        "post_type": "post",
+        "excerpt.default": "",
+        "category.name.default": [
+          "Eric Adams",
+          "City Hall"
+        ]
+      },
+      "result_type": "post",
+      "custom": false,
+      "railcar": {
+        "railcar": "nX4i!otV0&D(",
+        "fetch_algo": "jetpack:search\/10-date_desc",
+        "fetch_position": 0,
+        "rec_blog_id": 224811423,
+        "rec_post_id": 59057,
+        "fetch_lang": "en",
+        "fetch_query": "immigration",
+        "session_id": "bKVtVZ"
+      },
+      "highlight": {
+        "title": [
+          "Four Adams Deputy Mayors Quit Following Trump Deal"
+        ],
+        "content": [
+          "concerns about his partnership with Trump\u2019s <mark>immigration<\/mark> enforcement. Sunday\u2019s meeting was first reported",
+          "bucking New York\u2019s sanctuary city law, to allow <mark>Immigration<\/mark> and Customs Enforcement to work on Rikers Island"
+        ]
+      }
+    },
+    {
+      "_score": null,
+      "fields": {
+        "date": "2025-02-15 10:55:02",
+        "has.image": 4,
+        "blog_id": 224811423,
+        "image.url.raw": [
+          "www.thecity.nyc\/wp-content\/uploads\/2023\/09\/020824_nypd_times_sq_assault_bragg_adams_1-scaled.jpg",
+          "www.thecity.nyc\/wp-content\/uploads\/2024\/10\/100224_adams_court_2-1024x683.jpg",
+          "www.thecity.nyc\/wp-content\/uploads\/2024\/12\/121924_bragg_ingrid_presser_3-1024x683.jpg",
+          "www.thecity.nyc\/wp-content\/uploads\/2025\/02\/110624_tish_james_2-1024x683.jpg"
+        ],
+        "image.alt_text": [
+          "Manhattan District Attorney Alvin Bragg joins Mayor Eric Adams at a press conference about a group of men assaulting two NYPD officers in Times Square.",
+          "Mayor Eric Adams leaves federal court after a hearing in his corruption case.",
+          "State Attorney General Letitia James speaks at Gov. Kathy Hochul\u2019s Midtown office about how New York officials will respond to Donald Trump's presidential win."
+        ],
+        "@type": "post",
+        "permalink.url.raw": "www.thecity.nyc\/2025\/02\/15\/eric-adams-alvin-bragg-james-hochul-prosecution\/",
+        "title.default": "How Other Prosecutors Could Pick Up the Case Against Eric Adams",
+        "post_id": 59053,
+        "post_type": "post",
+        "excerpt.default": "",
+        "category.name.default": [
+          "Kathy Hochul",
+          "Eric Adams",
+          "Department of Investigation",
+          "Letitia James",
+          "Trump Administration",
+          "Alvin Bragg",
+          "Adams World: Investigated"
+        ]
+      },
+      "result_type": "post",
+      "custom": false,
+      "railcar": {
+        "railcar": "Ft9V1d*naBi4",
+        "fetch_algo": "jetpack:search\/10-date_desc",
+        "fetch_position": 1,
+        "rec_blog_id": 224811423,
+        "rec_post_id": 59053,
+        "fetch_lang": "en",
+        "fetch_query": "immigration",
+        "session_id": "bKVtVZ"
+      },
+      "highlight": {
+        "title": [
+          "How Other Prosecutors Could Pick Up the Case Against Eric Adams"
+        ],
+        "content": [
+          "cooperate more fully with President Trump\u2019s <mark>immigration<\/mark> enforcement efforts.\u00a0",
+          "rights project and has argued twice against Trump <mark>immigration<\/mark> policies. In one case he successfully challenged"
+        ]
+      }
+    }
+  ],
+  "suggestions": [],
+  "aggregations": []
+}
+
+
+
+
+
+
+
+
+
+
+
+
