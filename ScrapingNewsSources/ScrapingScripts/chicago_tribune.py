@@ -3,12 +3,12 @@ import logging
 import os
 import json
 import time
-import re
 from tqdm import tqdm
 from bs4 import BeautifulSoup
 from requests.adapters import HTTPAdapter
 from urllib3.util.retry import Retry
 from ScrapingScripts import register_scraper
+import re
 
 def setup_session():
     session = requests.Session()
@@ -26,9 +26,9 @@ def fetch_page(session, url, page):
         response = session.get(
             url.format(page=page),
             headers={
-                #'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36',
-                #'Accept': 'application/json',
-                #'X-Requested-With': 'XMLHttpRequest'
+                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36',
+                'Accept': '*/*',
+                'Accept-Language': 'en-US,en;q=0.9,es;q=0.8'
             },
             timeout=15
         )
@@ -43,7 +43,7 @@ def parse_total_results(html):
         soup = BeautifulSoup(html, 'html.parser')
         results_text = soup.find('span', class_='results').get_text(strip=True)
         total = int(re.search(r'There are ([\d,]+) results', results_text).group(1).replace(',', ''))
-        return max(1, total)  # Ensure at least 1 page
+        return max(1, total)
     except Exception as e:
         logging.error(f"Error parsing total results: {str(e)}")
         return None
@@ -72,21 +72,20 @@ def parse_articles(html):
 
 def save_results(articles, output_dir):
     os.makedirs(output_dir, exist_ok=True)
-    output_path = os.path.join(output_dir, 'ny_daily_news.json')
+    output_path = os.path.join(output_dir, 'chicago_tribune.json')
     with open(output_path, 'w', encoding='utf-8') as f:
         json.dump(articles, f, indent=2, ensure_ascii=False)
 
-
-@register_scraper('ny_daily_news')
+@register_scraper('chicago_tribune')
 def main(query, output_dir):
     logging.basicConfig(
-        filename='nydailynews_scraper.log',
+        filename='chicago_tribune_scraper.log',
         level=logging.ERROR,
         format='%(asctime)s - %(levelname)s - %(message)s'
     )
 
     session = setup_session()
-    base_url = f"https://www.nydailynews.com/page/{{page}}/?s={query}&post_type=post&category_name=new-york-news&orderby=date&order=desc&sp%5Bf%5D=2016-01-01&sp%5Bt%5D=2026-01-01&obit__spotlight&obit__site_name"
+    base_url = f"https://www.chicagotribune.com/page/{{page}}/?s={query}&post_type=post&category_name=local-news&orderby=date&order=desc&sp%5Bf%5D=2016-01-01&sp%5Bt%5D=2026-01-01&obit__spotlight&obit__site_name"
     
     # Get total results count
     initial_html = fetch_page(session, base_url, 1)
@@ -95,13 +94,15 @@ def main(query, output_dir):
         return
 
     total_results = parse_total_results(initial_html)
+    print(total_results)
     if not total_results:
         logging.error("Couldn't determine total results, using default 1000 results")
         total_results = 1000  # Fallback value
     
-
+    
     results_per_page = 10
     max_pages = (total_results + results_per_page - 1) // results_per_page  # Ceiling division
+
 
     all_articles = []
     page = 1
@@ -130,4 +131,7 @@ def main(query, output_dir):
             time.sleep(1)
 
     save_results(all_articles, output_dir)
-    print(f"✅ Saved {len(all_articles)} articles to {output_dir}/nydailynews.json")
+    print(f"✅ Saved {len(all_articles)} articles to {output_dir}/chicago_tribune.json")
+
+if __name__ == "__main__":
+    main("local-news", "output")

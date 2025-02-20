@@ -10,29 +10,38 @@ from ScrapingScripts import register_scraper
 
 # Configure logging
 logging.basicConfig(
-    filename='thecity_scraper.log',
+    filename='chicago_reporter_scraper.log',
     level=logging.ERROR,
     format='%(asctime)s - %(levelname)s - %(message)s'
 )
 
 def fetch_data(query, page_handle=None):
     session = requests.Session()
-    base_url = f'https://public-api.wordpress.com/rest/v1.3/sites/224811423/search?fields%5B0%5D=date&fields%5B1%5D=permalink.url.raw&fields%5B2%5D=tag.name.default&fields%5B3%5D=category.name.default&fields%5B4%5D=post_type&fields%5B5%5D=shortcode_types&fields%5B6%5D=forum.topic_resolved&fields%5B7%5D=has.image&fields%5B8%5D=image.url.raw&fields%5B9%5D=image.alt_text&highlight_fields%5B0%5D=title&highlight_fields%5B1%5D=content&highlight_fields%5B2%5D=comments&query={query}&sort=date_desc&size=20'
+    # Base URL updated for Chicago Reporter (site ID: 163009088)
+    base_url = (
+        f'https://public-api.wordpress.com/rest/v1.3/sites/163009088/search'
+        f'?fields%5B0%5D=date'
+        f'&fields%5B1%5D=permalink.url.raw'
+        f'&fields%5B2%5D=tag.name.default'
+        f'&fields%5B3%5D=category.name.default'
+        f'&fields%5B4%5D=post_type'
+        f'&fields%5B5%5D=shortcode_types'
+        f'&fields%5B6%5D=forum.topic_resolved'
+        f'&fields%5B7%5D=has.image'
+        f'&fields%5B8%5D=image.url.raw'
+        f'&fields%5B9%5D=image.alt_text'
+        f'&highlight_fields%5B0%5D=title'
+        f'&highlight_fields%5B1%5D=content'
+        f'&highlight_fields%5B2%5D=comments'
+        f'&query={query}'
+        f'&sort=date_desc'
+        f'&size=10'
+    )
     
     url = f"{base_url}&page_handle={page_handle}" if page_handle else base_url
 
     headers = {
         'accept': '*/*',
-        'accept-language': 'en-US,en;q=0.9,es;q=0.8',
-        'origin': 'https://www.thecity.nyc',
-        'priority': 'u=1, i',
-        'referer': 'https://www.thecity.nyc/',
-        'sec-ch-ua': '"Not A(Brand";v="8", "Chromium";v="132", "Google Chrome";v="132"',
-        'sec-ch-ua-mobile': '?0',
-        'sec-ch-ua-platform': '"Windows"',
-        'sec-fetch-dest': 'empty',
-        'sec-fetch-mode': 'cors',
-        'sec-fetch-site': 'cross-site',
         'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36'
     }
     
@@ -71,7 +80,7 @@ def process_data(data):
     return articles
 
 def save_data(articles, output_dir):
-    output_path = os.path.join(output_dir, 'the_city.json')
+    output_path = os.path.join(output_dir, 'chicago_reporter.json')
     try:
         os.makedirs(output_dir, exist_ok=True)
         with open(output_path, 'w') as f:
@@ -79,7 +88,7 @@ def save_data(articles, output_dir):
     except Exception as e:
         logging.error(f'Error saving file: {str(e)}')
 
-@register_scraper('the_city')
+@register_scraper('chicago_reporter')
 def main(query, output_dir):
     all_articles = []
     page_handle = None
@@ -130,4 +139,4 @@ def main(query, output_dir):
         pbar.close()
         
     save_data(all_articles, output_dir)
-    print(f"\n✅ Saved {len(all_articles)} articles to {os.path.join(output_dir, 'the_city.json')}")
+    print(f"\n✅ Saved {len(all_articles)} articles to {os.path.join(output_dir, 'chicago_reporter.json')}")
