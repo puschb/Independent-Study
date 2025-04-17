@@ -79,7 +79,6 @@ def parse_articles(html):
                     'title': title,
                     'link': link,
                     'date': date,
-                    'source': 'Bronx Times'
                 })
         except Exception as e:
             logging.error(f"Error parsing article: {str(e)}")

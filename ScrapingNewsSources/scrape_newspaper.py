@@ -4,6 +4,7 @@ import logging
 from ScrapingScripts import SCRAPER_REGISTRY
 
 def run_scraper(scraper_name, query, output_dir):
+    print('in run_scraper')
     if scraper_name not in SCRAPER_REGISTRY:
         available = ", ".join(SCRAPER_REGISTRY.keys())
         logging.error(f"Scraper '{scraper_name}' not found. Available: {available}")
@@ -38,5 +39,5 @@ if __name__ == '__main__':
             logging.StreamHandler()
         ]
     )
-
+    print("here")
     run_scraper(args.scraper, args.query, args.output_dir)
