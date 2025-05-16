@@ -12,6 +12,7 @@ from aiohttp import ClientSession
 from tqdm.asyncio import tqdm_asyncio
 import os
 from dateutil.parser import parse
+from tqdm.asyncio import tqdm as async_tqdm
 #from llama_immigration_classifier import LlamaImmigrationClassifier
 
 USER_AGENTS = [
@@ -31,17 +32,13 @@ IMMIGRATION_PATTERN = re.compile(
 async def fetch_article(session: ClientSession, article: Dict, semaphore: asyncio.Semaphore) -> Dict:
     async with semaphore:
         try:
-            # Skip if title doesn't match pattern
-            if not IMMIGRATION_PATTERN.search(article.get('title', '')):
-                return {**article, 'skipped': True}
-
-            url = article['link']
+            url = article['url']
             if not url.startswith(('http://', 'https://')):
                 url = f'https://{url}'
 
             headers = {'User-Agent': random.choice(USER_AGENTS)}
 
-            await asyncio.sleep(random.uniform(0.5, 2.0))
+            #await asyncio.sleep(random.uniform(0.5, 2.0))
 
             async with session.get(url, headers=headers, timeout=30) as response:
                 html = await response.text()
@@ -72,8 +69,11 @@ async def process_articles(articles: List[Dict], concurrency: int) -> List[Dict]
         tasks = [fetch_article(session, article, semaphore) for article in articles]
         results = []
 
-        for task in tqdm_asyncio.as_completed(tasks, total=len(articles), desc="Scraping Immigration Articles"):
-            results.append(await task)
+        for i in async_tqdm(range(0, len(tasks), concurrency), desc="Fetching article batches"):
+            batch = tasks[i:i+concurrency]
+            results.append(await asyncio.gather(*batch))
+            await asyncio.sleep(1)
+
 
         return results
 
@@ -125,14 +125,11 @@ def main():
     successful = []
     errors = []
 
-    for result in results:
-        if result.get('skipped'):
-            continue  # Skip articles that didn't match pattern
-        
+    for result in results:   
         if 'error' in result:
             errors.append(result)
         else:
-            # Get the original date before scraping
+            '''# Get the original date before scraping
             original_date = parse_article_date({'date': result.get('original_date')})
             
             # If article previously had no date but now has one, check the new date
@@ -142,8 +139,8 @@ def main():
                     successful.append(result)
                 # Skip articles with newly found dates before the start date
             else:
-                # Article had a valid date initially, so we keep it
-                successful.append(result)
+                # Article had a valid date initially, so we keep it'''
+            successful.append(result)
 
     os.makedirs(args.output, exist_ok=True)
     os.makedirs(args.errors, exist_ok=True)
